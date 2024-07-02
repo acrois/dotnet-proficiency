@@ -16,11 +16,10 @@ const ProductList = () => {
                 {products.map((product) => (
                     <li key={product.id}>
                         {product.name} - ${product.price}
-                        <Link to={`/edit/${product.id}`}>Edit</Link>
+                        <Link to={`/edit/${product.id}`} className="edit-link">Edit</Link>
                     </li>
                 ))}
             </ul>
-            <Link to="/add">Add Product</Link>
         </div>
     );
 };
