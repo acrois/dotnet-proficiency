@@ -1,0 +1,43 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "Developerz0rz"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+
+  backend:
+    build:
+      context: ./server
+      target: build-env
+    command: ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:80"]
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:80"
+    depends_on:
+      - sqlserver
+    volumes:
+      - ./server:/app
+      - /app/obj
+      - /app/bin
+
+  frontend:
+    build:
+      context: ./client
+      target: build
+    command: ["npm", "start"]
+    ports:
+      # - "3000:80"
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+
+volumes:
+  sqlserverdata:
