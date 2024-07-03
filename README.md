@@ -7,7 +7,7 @@ Demo project using ASP with .NET 8, React (Node 22), and Docker.
 - Docker
 - Docker Compose
 - .NET 8
-- Node 22
+- Node 20/22
 
 ## Development
 
